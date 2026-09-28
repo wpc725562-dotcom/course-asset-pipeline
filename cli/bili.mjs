@@ -10,6 +10,7 @@
 // 设计要点见同目录 SKILL.md。
 
 import fs from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -66,11 +67,23 @@ function fmtNum(n) {
 }
 
 function fmtDur(sec) {
-  // ⚠️ 两种输入形态，别只处理一种：
-  //   search/type  → duration 是 "MM:SS" / "HH:MM:SS" 字符串
-  //   web-interface/view → duration 是秒数
-  // 只按秒数处理时 Number("12:34") === NaN ⇒ 搜索结果时长全被格式化成 0:00（实测踩过）。
-  if (typeof sec === 'string' && /^\d{1,2}(:\d{1,2}){1,2}$/.test(sec.trim())) return sec.trim();
+  // ⚠️ 两种输入形态，别只处理一种（2026-09-28 用 8 条样本交叉验证 search 串 vs view 秒数，8/8 吻合）：
+  //   search/type        → "<总分钟数>:<秒>"，**分钟数是「总分钟」不是「时:分」**，
+  //                        且可以到 4 位（合集/多 P 的总时长）。例 "1349:25" = 1349min25s = 22:29:25
+  //   web-interface/view → 秒数
+  // 两个坑，都踩过：
+  //   ① 不处理字符串 → Number("12:34") === NaN ⇒ 时长全变 0:00
+  //   ② 正则只允许冒号前 1~2 位 → 长合集（"1349:25"）不匹配 → 又掉回 NaN → 0:00。
+  //      而短视屏恰好能正常显示，于是**看起来像是修好了**，实际只覆盖了一半数据。
+  if (typeof sec === 'string') {
+    const s = sec.trim();
+    const ms = /^(\d{1,5}):(\d{1,2})$/.exec(s); // 分钟:秒（B站实际形态）
+    if (ms) sec = Number(ms[1]) * 60 + Number(ms[2]);
+    else {
+      const hms = /^(\d{1,2}):(\d{1,2}):(\d{1,2})$/.exec(s); // 时:分:秒（防御性分支）
+      if (hms) sec = Number(hms[1]) * 3600 + Number(hms[2]) * 60 + Number(hms[3]);
+    }
+  }
   sec = Number(sec) || 0;
   const h = Math.floor(sec / 3600);
   const m = Math.floor((sec % 3600) / 60);
@@ -433,4 +446,10 @@ async function main() {
   }
 }
 
-main();
+// 只有被当作入口直接运行时才执行 CLI —— 被 import 时（例如 tests/test_fmt_dur.mjs）
+// 不应触发 main()，否则测试进程会去解析 argv 并 process.exit()。
+const isEntry =
+  process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isEntry) main();
+
+export { fmtDur, fmtNum, stripTags, parseArgs };

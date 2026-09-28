@@ -39,7 +39,7 @@ jobs:
           cap verify --help
 
   lint-node:
-    name: node syntax check
+    name: node syntax check & unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +48,8 @@ jobs:
           node-version: "20"
       - name: Check the metadata CLI parses
         run: node --check cli/bili.mjs
+      - name: Run the metadata CLI unit tests
+        run: node --test tests/test_fmt_dur.mjs
 
   cli-smoke:
     name: end-to-end pipeline smoke test
