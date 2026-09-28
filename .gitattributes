@@ -1,0 +1,15 @@
+# Normalize line endings to LF in the repository and in checkouts.
+# Without this, a Windows working copy stores CRLF and every diff is noisy.
+* text=auto eol=lf
+
+*.py   text eol=lf
+*.mjs  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.toml text eol=lf
+
+*.png binary
+*.jpg binary
+*.m4a binary
+*.mp3 binary

@@ -1,0 +1,4 @@
+# Runtime dependencies.
+# The speech-to-text layer is optional -- see requirements-asr.txt.
+numpy>=1.24
+av>=12.0

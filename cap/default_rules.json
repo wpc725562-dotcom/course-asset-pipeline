@@ -1,0 +1,20 @@
+{
+  "_comment": "Classification rules for cap classify. Rules are data, not code, so the pipeline is not tied to one subject or exam syllabus. Every entry is [regex, human_readable_reason].",
+  "variant_marker": "(?:字幕版|subbed|subtitled)",
+  "retract": [],
+  "non_teaching": [
+    ["课程介绍|课程导览|试听", "course intro / trailer"],
+    ["导学|導入|オリエンテーション", "orientation, no teaching content"],
+    ["配套教辅|教材在哪里|购买|お知らせ", "sales / companion-material notice"],
+    ["白嫖指南|免费领取|领取资料", "lead-generation page"],
+    ["直播规划|复习规划|学习规划", "live planning session, not a lecture"]
+  ],
+  "not_exam": [
+    ["大纲已删|已从大纲删除|syllabus removed", "removed from the syllabus"],
+    ["不考|不考，简单了解|out of scope", "explicitly out of scope"],
+    ["选学|选修|optional reading", "marked optional"]
+  ],
+  "superseded": [
+    ["旧版|旧版本|legacy|前版", "legacy version, superseded by a newer upload"]
+  ]
+}

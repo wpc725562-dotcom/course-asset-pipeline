@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "course-asset-pipeline"
+version = "0.1.0"
+description = "Turn a video-course collection into a verified, deduplicated, searchable local library."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "wpc725562-dotcom" }]
+keywords = ["video-course", "deduplication", "audio-fingerprint", "speech-to-text", "data-pipeline"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Multimedia :: Sound/Audio :: Analysis",
+  "Topic :: Education",
+]
+
+dependencies = [
+  "numpy>=1.24",
+  "av>=12.0",
+]
+
+[project.optional-dependencies]
+asr = ["faster-whisper>=1.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cap = "cap.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/wpc725562-dotcom/course-asset-pipeline"
+
+[tool.setuptools]
+packages = ["cap"]
+
+[tool.setuptools.package-data]
+cap = ["default_rules.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

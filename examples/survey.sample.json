@@ -1,0 +1,29 @@
+[
+  {
+    "bvid": "BV1Aa4y1B7cD",
+    "label": "Data structures",
+    "owner": "Example channel",
+    "pages": 3,
+    "mins": 99,
+    "stat": { "view": 30822000, "danmaku": 431000, "favorite": 492000, "coin": 279000 },
+    "parts": [
+      { "p": 1, "t": "1.1 Basic concepts of data structures", "m": 33 },
+      { "p": 2, "t": "导学", "m": 8 },
+      { "p": 3, "t": "1.2 Algorithm analysis (旧版)", "m": 58 }
+    ]
+  },
+  {
+    "bvid": "BV1AAAAAAAAA",
+    "label": "Linear algebra",
+    "owner": "Example channel",
+    "pages": 4,
+    "mins": 120,
+    "stat": { "view": 120000, "danmaku": 400, "favorite": 3000, "coin": 1500 },
+    "parts": [
+      { "p": 1, "t": "Chapter 1 Determinants part 1", "m": 63 },
+      { "p": 2, "t": "Chapter 1 Determinants part 2", "m": 55 },
+      { "p": 3, "t": "【字幕版】Chapter 1 all", "m": 63 },
+      { "p": 4, "t": "【字幕版】Chapter 1 all continued", "m": 55 }
+    ]
+  }
+]

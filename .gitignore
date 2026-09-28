@@ -1,0 +1,45 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local library artifacts -- never commit media or generated manifests
+library/
+_manifest/
+_quarantine/
+*.m4a
+*.mp3
+*.wav
+*.flac
+*.opus
+*.mp4
+*.mkv
+transcripts/
+*.srt
+
+# Local data files
+survey.json
+classify.json
+manifest.json
+manifest.csv
+checksums.sha256
+rename_map.json
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
