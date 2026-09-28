@@ -163,7 +163,13 @@ def main() -> int:
         from cap import redownload as rd
 
         manifest = json.load(open(manifest_path, encoding="utf-8"))
-        manifest["files"][0]["status"] = "undecodable"
+        # Pick the target by path, not by index: os.walk yields directories in an
+        # order that differs between Linux and Windows, so files[0] is not stable.
+        victim = next(
+            e for e in manifest["files"]
+            if "BV1AAAAAAAAA" in e["rel"] and e["name"].startswith("001")
+        )
+        victim["status"] = "undecodable"
         with open(manifest_path, "w", encoding="utf-8") as fh:
             json.dump(manifest, fh, ensure_ascii=False)
         targets = rd.collect_bad(manifest_path)
